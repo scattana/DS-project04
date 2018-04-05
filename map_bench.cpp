@@ -44,14 +44,14 @@ void parse_command_line_options(int argc, char *argv[], Map *&map, int &nitems, 
                     map = new TreapMap();
                 } else if(strcasecmp(optarg, "unordered") == 0) {
                     map = new UnorderedMap();
-                } else if(substr_compare(optarg, "chained", 0, 7, true) == 0) {
-                    if(optarg.length() > 7)
-                        map = new ChainedMap(DEFAULT_TABLE_SIZE, stod(optarg.substr(8, 100)));
+                } else if(strcasecmp(optarg.substr(0, 7), "chained") == 0) {
+                    if(optarg[7] != '\0')
+                        map = new ChainedMap(DEFAULT_TABLE_SIZE, atod(optarg.substr(8, 100)));
                     else
                         map = new ChainedMap(DEFAULT_TABLE_SIZE, DEFAULT_LOAD_FACTOR);
-                }else if(substr_compare(optarg, "open", 0, 4, true) == 0) {
-                    if(optarg.length() > 4)
-                        map = new OpenMap(DEFAULT_TABLE_SIZE, stod(optarg.substr(5, 100)));
+                }else if(substr_compare(optarg.substr(0,4), "open") == 0) {
+                    if(optarg[4] != '\0')
+                        map = new OpenMap(DEFAULT_TABLE_SIZE, atod(optarg.substr(5, 100)));
                     else
                         map = new OpenMap(DEFAULT_TABLE_SIZE, DEFAULT_LOAD_FACTOR);
 
@@ -75,7 +75,7 @@ void parse_command_line_options(int argc, char *argv[], Map *&map, int &nitems, 
     }
 
     if (map == nullptr) {
-    map = new UnsortedMap();
+    	map = new UnsortedMap();
     }
 }
 
@@ -123,4 +123,3 @@ int main(int argc, char *argv[]) {
 }
 
 // vim: set sts=4 sw=4 ts=8 expandtab ft=cpp:
-
