@@ -58,12 +58,15 @@ const Entry     OpenMap::search(const std::string &key) {
 
 // dump in appropriate format to stream
 void            OpenMap::dump(std::ostream &os, DumpFlag flag) {
+	//return;
 	for(size_t i=0; i<table_size; i++){
+		if(table[i] != NONE){
 		switch(flag){
 			case DUMP_KEY:			os << table[i].first << std::endl; break;
 			case DUMP_VALUE:		os << table[i].second << std::endl; break;
-			case DUMP_KEY_VALUE:	os << table[i].first << table[i].second << std::endl; break;
-			case DUMP_VALUE_KEY:	os << table[i].second << table[i].first << std::endl; break;
+			case DUMP_KEY_VALUE:	os << table[i].first << "\t" << table[i].second << std::endl; break;
+			case DUMP_VALUE_KEY:	os << table[i].second << "\t" << table[i].first << std::endl; break;
+		}
 		}
 	}
 }
@@ -91,6 +94,8 @@ size_t          OpenMap::locate(const std::string &key) {
 // called by "insert" when (1) no empty entries in the table, or (2) when
 // current load factor exceeds max load factor
 void            OpenMap::resize(const size_t new_size) {
+//	std::cout << "\n\n\n\ntable size is: " << table_size << "\n\n\n\n" << std::endl;
+//	dump(std::cout, DUMP_KEY_VALUE);
 	auto old_table = table;
 	auto old_size = table_size;
 	table = new Entry[new_size];

@@ -7,7 +7,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-
+#include <string.h>
 #include <strings.h>
 #include <unistd.h>
 
@@ -46,12 +46,12 @@ void parse_command_line_options(int argc, char *argv[], Map *&map, int &nitems, 
                     map = new UnorderedMap();
                 } else if(strstr(optarg, "chained")) {
                     if(optarg[7] != '\0')
-                        map = new ChainedMap(DEFAULT_TABLE_SIZE, atod(&(optarg[8]));
+                        map = new ChainedMap(DEFAULT_TABLE_SIZE, (double)atof(&(optarg[8])));
                     else
                         map = new ChainedMap(DEFAULT_TABLE_SIZE, DEFAULT_LOAD_FACTOR);
                 }else if(strstr(optarg, "open")) {
                     if(optarg[4] != '\0')
-                        map = new OpenMap(DEFAULT_TABLE_SIZE, atod(&(optarg[5])));
+                        map = new OpenMap(DEFAULT_TABLE_SIZE, (double)atof(&(optarg[5])));
                     else
                         map = new OpenMap(DEFAULT_TABLE_SIZE, DEFAULT_LOAD_FACTOR);
 
