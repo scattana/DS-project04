@@ -107,16 +107,36 @@ public:
             const Entry     search(const std::string &key);
             void            dump(std::ostream &os, DumpFlag flag);
 private:
+			std::unordered_map<std::string, std::string> entries;
 };
 
 class ChainedMap : public Map {
 public:
+							ChainedMap(size_t tableSize, double ldFactor){
+								size = 0;
+								nEntries = 0;
+								loadFactor = ldFactor;
+								resize(tableSize);
+							}
+							ChainedMap(){
+								size = 0;
+								nEntries = 0;
+								loadFactor = DEFAULT_LOAD_FACTOR;
+								resize(DEFAULT_TABLE_SIZE);
+							}
+							~ChainedMap(){
+								delete[] table;
+							}
             void            insert(const std::string &key, const std::string &value);
             const Entry     search(const std::string &key);
             void            dump(std::ostream &os, DumpFlag flag);
 
 private:
             void            resize(const size_t new_size);
+            size_t			size;
+            size_t			nEntries;
+            double			loadFactor;
+            std::map<std::string, std::string> *table;
 };
 
 class OpenMap : public Map {
