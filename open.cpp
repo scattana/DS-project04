@@ -102,7 +102,7 @@ void            OpenMap::resize(const size_t new_size) {
 	table_size = new_size;
 	// copy old values from table to new table
 	for(size_t i=0; i<old_size; i++){
-		if(old_table[i] != NONE) insert(old_table->first, old_table->second);
+		if(old_table[i] != NONE) insert(old_table[i].first, old_table[i].second);
 	}
 	delete[] old_table;
 }
